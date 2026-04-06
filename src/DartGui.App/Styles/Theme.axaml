@@ -1,0 +1,400 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <SolidColorBrush x:Key="WindowBackgroundBrush">#ECE7D9</SolidColorBrush>
+    <SolidColorBrush x:Key="ShellBrush">#F7F2E6</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceBrush">#FFFDFC</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceMutedBrush">#EDE6D6</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryBrush">#183A37</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySoftBrush">#2E5E59</SolidColorBrush>
+    <SolidColorBrush x:Key="TextBrush">#1E1E1E</SolidColorBrush>
+    <SolidColorBrush x:Key="TextMutedBrush">#5F5A50</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentBrush">#C16A35</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSoftBrush">#E8B28C</SolidColorBrush>
+    <SolidColorBrush x:Key="SuccessBrush">#2F6F4F</SolidColorBrush>
+    <SolidColorBrush x:Key="WarningBrush">#D38B1D</SolidColorBrush>
+    <SolidColorBrush x:Key="DangerBrush">#B33A2C</SolidColorBrush>
+    <SolidColorBrush x:Key="DangerSoftBrush">#F1C0B3</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderBrush">#D3C8B5</SolidColorBrush>
+    <SolidColorBrush x:Key="DisabledBrush">#AFA79A</SolidColorBrush>
+  </Styles.Resources>
+
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+    <Setter Property="FontFamily" Value="Microsoft YaHei UI,Noto Sans CJK SC,PingFang SC,sans-serif" />
+  </Style>
+
+  <Style Selector="TextBlock.section-title">
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="TextBlock.section-subtitle">
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+  </Style>
+
+  <Style Selector="Border.top-bar">
+    <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+    <Setter Property="Padding" Value="10,8" />
+    <Setter Property="BorderBrush" Value="{StaticResource PrimarySoftBrush}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+  </Style>
+
+  <Style Selector="Border.nav-panel">
+    <Setter Property="Background" Value="{StaticResource ShellBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="0,1,1,0" />
+    <Setter Property="Padding" Value="10" />
+  </Style>
+
+  <Style Selector="Border.workspace-shell">
+    <Setter Property="Padding" Value="0" />
+  </Style>
+
+  <Style Selector="Border.side-panel-shell">
+    <Setter Property="Background" Value="{StaticResource ShellBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="14" />
+    <Setter Property="Padding" Value="8" />
+  </Style>
+
+  <Style Selector="Border.status-panel-shell">
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="14" />
+    <Setter Property="Padding" Value="8" />
+  </Style>
+
+  <Style Selector="Border.section-card">
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="14" />
+    <Setter Property="Padding" Value="10" />
+  </Style>
+
+  <Style Selector="Border.page-card">
+    <Setter Property="Padding" Value="10" />
+  </Style>
+
+  <Style Selector="Border.task-subpanel">
+    <Setter Property="Background" Value="#F7F1E5" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="10" />
+  </Style>
+
+  <Style Selector="Border.task-subpanel.queue-panel">
+    <Setter Property="Background" Value="#F2EBDD" />
+  </Style>
+
+  <Style Selector="Button">
+    <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+    <Setter Property="CornerRadius" Value="12" />
+  </Style>
+
+  <Style Selector="Button.nav-button">
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Padding" Value="10,12" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="Button.nav-button.selected">
+    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Button.sidebar-tab">
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="Button.sidebar-tab.selected">
+    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Button.top-action">
+    <Setter Property="MinWidth" Value="80" />
+    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="Padding" Value="10,6" />
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="Button.top-action.danger">
+    <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Button.top-action:disabled">
+    <Setter Property="Background" Value="{StaticResource DisabledBrush}" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="{StaticResource DisabledBrush}" />
+  </Style>
+
+  <Style Selector="Border.info-chip">
+    <Setter Property="Background" Value="#1F4A46" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="8,4" />
+  </Style>
+
+  <Style Selector="Border.connection-chip">
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="8,4" />
+    <Setter Property="Background" Value="#2C3736" />
+  </Style>
+
+  <Style Selector="Border.connection-chip.online">
+    <Setter Property="Background" Value="{StaticResource SuccessBrush}" />
+  </Style>
+
+  <Style Selector="Border.connection-chip.reconnecting">
+    <Setter Property="Background" Value="{StaticResource WarningBrush}" />
+  </Style>
+
+  <Style Selector="Border.connection-chip.offline">
+    <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Button.fault-button">
+    <Setter Property="Background" Value="#31413F" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="#31413F" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="FontSize" Value="12" />
+  </Style>
+
+  <Style Selector="Button.fault-button.active">
+    <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Button.fault-button.strip">
+    <Setter Property="MinHeight" Value="32" />
+  </Style>
+
+  <Style Selector="Button.command-button">
+    <Setter Property="MinHeight" Value="48" />
+    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="Background" Value="{StaticResource SurfaceMutedBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+  </Style>
+
+  <Style Selector="Button.command-button.pending">
+    <Setter Property="Background" Value="#E2D4B3" />
+    <Setter Property="BorderBrush" Value="{StaticResource WarningBrush}" />
+  </Style>
+
+  <Style Selector="Button.command-button.active">
+    <Setter Property="Background" Value="#D8E7DE" />
+    <Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+  </Style>
+
+  <Style Selector="Button.command-button.danger">
+    <Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Button.command-button.recovery">
+    <Setter Property="Background" Value="#D4E6DE" />
+    <Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+  </Style>
+
+  <Style Selector="Button.command-button:disabled">
+    <Setter Property="Background" Value="#E2DACC" />
+    <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+  </Style>
+
+  <Style Selector="Button.manual-button">
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="Padding" Value="6,4" />
+    <Setter Property="Background" Value="{StaticResource SurfaceMutedBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <Style Selector="Button.manual-button.active">
+    <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Button.manual-button.dpad">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+
+  <Style Selector="Button.manual-button.tall">
+    <Setter Property="MinHeight" Value="42" />
+  </Style>
+
+  <Style Selector="Button.manual-button:disabled">
+    <Setter Property="Background" Value="#E4DDCF" />
+    <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+  </Style>
+
+  <Style Selector="Border.dpad-center">
+    <Setter Property="Background" Value="#E0D6C4" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="20" />
+  </Style>
+
+  <Style Selector="Border.feedback-banner">
+    <Setter Property="Background" Value="#E9E2D5" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="8,6" />
+  </Style>
+
+  <Style Selector="Border.feedback-banner.positive">
+    <Setter Property="Background" Value="#D7E7DE" />
+  </Style>
+
+  <Style Selector="Border.feedback-banner.negative">
+    <Setter Property="Background" Value="#F2D8D1" />
+  </Style>
+
+  <Style Selector="Border.status-card">
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="8" />
+    <Setter Property="Background" Value="#F1EBDD" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <Style Selector="Border.status-card.tight">
+    <Setter Property="Padding" Value="7" />
+  </Style>
+
+  <Style Selector="Border.status-card.normal">
+    <Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+  </Style>
+
+  <Style Selector="Border.status-card.warning">
+    <Setter Property="BorderBrush" Value="{StaticResource WarningBrush}" />
+  </Style>
+
+  <Style Selector="Border.status-card.stale">
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+  </Style>
+
+  <Style Selector="Border.status-card.offline">
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Border.camera-card">
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="Padding" Value="8" />
+  </Style>
+
+  <Style Selector="Border.camera-card.offline">
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Border.camera-frame">
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Background" Value="#EAE2D2" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Height" Value="86" />
+    <Setter Property="Padding" Value="6" />
+  </Style>
+
+  <Style Selector="Border.manual-group">
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="10" />
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <Style Selector="Border.manual-group.ready">
+    <Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+  </Style>
+
+  <Style Selector="Border.manual-group.degraded">
+    <Setter Property="BorderBrush" Value="{StaticResource WarningBrush}" />
+  </Style>
+
+  <Style Selector="Border.manual-group.unsupported">
+    <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}" />
+  </Style>
+
+  <Style Selector="Border.overlay-panel">
+    <Setter Property="Background" Value="{StaticResource ShellBrush}" />
+    <Setter Property="CornerRadius" Value="24,0,0,24" />
+    <Setter Property="Padding" Value="20" />
+  </Style>
+
+  <Style Selector="Border.dialog-card">
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="CornerRadius" Value="24" />
+    <Setter Property="Padding" Value="24" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+  <Style Selector="Border.note-card">
+    <Setter Property="Background" Value="#EEE5D7" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Padding" Value="10" />
+  </Style>
+
+  <Style Selector="Border.queue-item">
+    <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="8" />
+  </Style>
+
+  <Style Selector="Border.queue-item.running">
+    <Setter Property="BorderBrush" Value="{StaticResource SuccessBrush}" />
+    <Setter Property="Background" Value="#E3EFE7" />
+  </Style>
+
+  <Style Selector="Border.queue-item.queued">
+    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+    <Setter Property="Background" Value="#F5E7D8" />
+  </Style>
+
+  <Style Selector="Border.queue-item.idle">
+    <Setter Property="BorderBrush" Value="{StaticResource DisabledBrush}" />
+    <Setter Property="Background" Value="#F3EFE8" />
+  </Style>
+</Styles>

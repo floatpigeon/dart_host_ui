@@ -1,0 +1,218 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DartGui.App.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{Binding Title}"
+        Width="1024"
+        Height="600"
+        MinWidth="1024"
+        MaxWidth="1024"
+        MinHeight="600"
+        MaxHeight="600"
+        CanResize="False"
+        ExtendClientAreaChromeHints="NoChrome">
+  <Grid RowDefinitions="68,*">
+    <Border Grid.Row="0" Classes="top-bar">
+      <Grid ColumnDefinitions="132,144,*" ColumnSpacing="10">
+        <StackPanel VerticalAlignment="Center" Spacing="2">
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="6">
+          <Button Classes="top-action danger"
+                  Content="停止"
+                  Command="{Binding RequestStopCommand}" />
+        </StackPanel>
+
+        <Grid Grid.Column="2" ColumnDefinitions="74,74,124,84,*" ColumnSpacing="6" VerticalAlignment="Center">
+          <Border Grid.Column="0"
+                  Classes="connection-chip"
+                  Classes.online="{Binding GuiBridgeBadge.IsOnline}"
+                  Classes.reconnecting="{Binding GuiBridgeBadge.IsReconnecting}"
+                  Classes.offline="{Binding GuiBridgeBadge.IsOffline}">
+            <StackPanel Spacing="0">
+              <TextBlock Text="界面" FontSize="9" Foreground="#F5F5F5" />
+              <TextBlock Text="{Binding GuiBridgeBadge.StatusText}" FontSize="12" FontWeight="SemiBold" Foreground="White" />
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="1"
+                  Classes="connection-chip"
+                  Classes.online="{Binding RmcsBadge.IsOnline}"
+                  Classes.reconnecting="{Binding RmcsBadge.IsReconnecting}"
+                  Classes.offline="{Binding RmcsBadge.IsOffline}">
+            <StackPanel Spacing="0">
+              <TextBlock Text="状态" FontSize="9" Foreground="#F5F5F5" />
+              <TextBlock Text="{Binding RmcsBadge.StatusText}" FontSize="12" FontWeight="SemiBold" Foreground="White" />
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="2" Classes="info-chip">
+            <StackPanel Spacing="0">
+              <TextBlock Text="任务" FontSize="9" Foreground="#D9ECEA" />
+              <TextBlock Text="{Binding CurrentTaskText}"
+                         FontSize="12"
+                         FontWeight="SemiBold"
+                         Foreground="White"
+                         TextTrimming="CharacterEllipsis"
+                         MaxLines="1" />
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="3" Classes="info-chip">
+            <StackPanel Spacing="0">
+              <TextBlock Text="状态" FontSize="9" Foreground="#D9ECEA" />
+              <TextBlock Text="{Binding ManagerStateText}" FontSize="12" FontWeight="SemiBold" Foreground="White" />
+            </StackPanel>
+          </Border>
+
+          <Button Grid.Column="4"
+                  Classes="fault-button strip"
+                  Classes.active="{Binding HasActiveFault}"
+                  Command="{Binding ToggleFaultPanelCommand}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+              <TextBlock Text="故障" VerticalAlignment="Center" FontSize="11" FontWeight="Bold" />
+              <TextBlock Grid.Column="1"
+                         Text="{Binding FaultSummary}"
+                         VerticalAlignment="Center"
+                         FontSize="11"
+                         FontWeight="SemiBold"
+                         TextTrimming="CharacterEllipsis"
+                         MaxLines="1" />
+            </Grid>
+          </Button>
+        </Grid>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="110,*,196" ColumnSpacing="8">
+      <Border Grid.Column="0" Classes="nav-panel">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+          <Button Grid.Row="0"
+                  Classes="nav-button"
+                  Classes.selected="{Binding IsTaskPageSelected}"
+                  Command="{Binding ShowTaskPageCommand}"
+                  Content="任务控制" />
+          <Button Grid.Row="1"
+                  Margin="0,10,0,0"
+                  Classes="nav-button"
+                  Classes.selected="{Binding IsManualPageSelected}"
+                  Command="{Binding ShowManualPageCommand}"
+                  Content="手动控制" />
+          <Button Grid.Row="2"
+                  Margin="0,10,0,0"
+                  Classes="nav-button"
+                  Classes.selected="{Binding IsStepControlPageSelected}"
+                  Command="{Binding ShowStepControlPageCommand}"
+                  Content="单步控制" />
+          <Button Grid.Row="3"
+                  Margin="0,10,0,0"
+                  Classes="nav-button"
+                  Classes.selected="{Binding IsCameraPageSelected}"
+                  Command="{Binding ShowCameraPageCommand}"
+                  Content="相机画面" />
+
+          <Border Grid.Row="4"
+                  Margin="0,10,0,0"
+                  Background="#E5DDCE"
+                  CornerRadius="12"
+                  Padding="10"
+                  VerticalAlignment="Bottom">
+            <StackPanel Spacing="4">
+              <TextBlock Text="预览模式" FontSize="12" FontWeight="SemiBold" />
+              <TextBlock Text="当前界面仅保留本地 UI 壳和基础交互。"
+                         TextWrapping="Wrap"
+                         FontSize="10"
+                         Foreground="{DynamicResource TextMutedBrush}" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="1" Classes="workspace-shell">
+        <ContentControl Content="{Binding CurrentPage}" />
+      </Border>
+
+      <Border Grid.Column="2" Classes="status-panel-shell">
+        <ContentControl Content="{Binding KeyStatusPanel}" />
+      </Border>
+    </Grid>
+
+    <Grid Grid.RowSpan="2"
+          IsVisible="{Binding IsFaultPanelOpen}"
+          Background="#73000000">
+      <Border HorizontalAlignment="Right"
+              Width="340"
+              Classes="overlay-panel">
+        <Grid RowDefinitions="Auto,*" RowSpacing="16">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4">
+              <TextBlock Text="故障与恢复记录" Classes="section-title" />
+              <TextBlock Text="本地预览模式下保留故障面板版式。"
+                         Classes="section-subtitle"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+            <Button Grid.Column="1"
+                    Classes="top-action"
+                    MinWidth="72"
+                    Content="关闭"
+                    Command="{Binding ToggleFaultPanelCommand}" />
+          </Grid>
+
+          <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Faults}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Margin="0,0,0,10"
+                          Padding="12"
+                          CornerRadius="16"
+                          Background="White"
+                          BorderBrush="{DynamicResource BorderBrush}"
+                          BorderThickness="1">
+                    <StackPanel Spacing="4">
+                      <TextBlock Text="{Binding LevelText}" FontSize="12" FontWeight="Bold" />
+                      <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="14" FontWeight="SemiBold" />
+                      <TextBlock Text="{Binding Code}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                      <TextBlock Text="{Binding Source}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                      <TextBlock Text="{Binding TimestampText}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                      <TextBlock Text="{Binding StatusText}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+        </Grid>
+      </Border>
+    </Grid>
+
+    <Grid Grid.RowSpan="2"
+          IsVisible="{Binding IsStopDialogOpen}"
+          Background="#85000000">
+      <Border Classes="dialog-card"
+              Width="380"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+        <StackPanel Spacing="16">
+          <TextBlock Text="确认停止当前操作？" FontSize="24" FontWeight="Bold" />
+          <TextBlock Text="当前仅保留停止按钮的界面交互，不连接外部控制系统。"
+                     TextWrapping="Wrap"
+                     FontSize="14"
+                     Foreground="{DynamicResource TextMutedBrush}" />
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Right"
+                      Spacing="12">
+            <Button Classes="top-action"
+                    Content="取消"
+                    Command="{Binding CancelStopCommand}" />
+            <Button Classes="top-action danger"
+                    Content="确认停止"
+                    Command="{Binding ConfirmStopCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

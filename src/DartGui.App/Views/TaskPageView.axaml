@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DartGui.App.Views.TaskPageView">
+  <Border Classes="section-card page-card">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="10">
+      <StackPanel Spacing="2">
+        <TextBlock Text="任务控制" Classes="section-title" />
+        <TextBlock Text="自动任务入口仅保留界面预览与版式。"
+                   Classes="section-subtitle"
+                   TextWrapping="Wrap" />
+      </StackPanel>
+
+      <Border Grid.Row="1"
+              Classes="feedback-banner"
+              Classes.positive="{Binding IsFeedbackPositive}"
+              Classes.negative="{Binding IsFeedbackNegative}">
+        <StackPanel Spacing="2">
+          <TextBlock Text="{Binding FeedbackTitle}" FontSize="12" FontWeight="SemiBold" />
+          <TextBlock Text="{Binding FeedbackMessage}"
+                     FontSize="10"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+      <Grid Grid.Row="2" ColumnDefinitions="1.2*,0.88*" ColumnSpacing="10">
+        <Border Grid.Column="0" Classes="task-subpanel">
+          <Grid RowDefinitions="Auto,*" RowSpacing="8">
+            <StackPanel Spacing="2">
+              <TextBlock Text="任务命令" FontSize="14" FontWeight="SemiBold" />
+              <TextBlock Text="点击后只更新本地预览反馈，不连接后台。"
+                         Classes="section-subtitle"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Commands}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <UniformGrid Columns="2" Rows="3" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Button Margin="0,0,6,6"
+                          Classes="command-button"
+                          Classes.danger="{Binding IsDanger}"
+                          Classes.recovery="{Binding IsRecovery}"
+                          Classes.pending="{Binding IsPending}"
+                          Classes.active="{Binding IsActive}"
+                          Command="{Binding SendCommandCommand}">
+                    <StackPanel Spacing="2">
+                      <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="Bold" />
+                      <TextBlock Text="{Binding StatusText}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" />
+                    </StackPanel>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Classes="task-subpanel queue-panel">
+          <Grid RowDefinitions="Auto,*" RowSpacing="8">
+            <StackPanel Spacing="2">
+              <TextBlock Text="当前任务队列" FontSize="14" FontWeight="SemiBold" />
+              <TextBlock Text="{Binding QueueSummary}"
+                         Classes="section-subtitle"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding QueueItems}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Margin="0,0,0,8"
+                          Classes="queue-item"
+                          Classes.running="{Binding IsRunning}"
+                          Classes.queued="{Binding IsQueued}"
+                          Classes.idle="{Binding IsIdle}">
+                    <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
+                      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <TextBlock Text="{Binding Title}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   MaxLines="1" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding StatusText}"
+                                   FontSize="10"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextMutedBrush}" />
+                      </Grid>
+                      <TextBlock Grid.Row="1"
+                                 Text="{Binding DetailText}"
+                                 FontSize="10"
+                                 Foreground="{DynamicResource TextMutedBrush}"
+                                 TextWrapping="Wrap" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+        </Border>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>

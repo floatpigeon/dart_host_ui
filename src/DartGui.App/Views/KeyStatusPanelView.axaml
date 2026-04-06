@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DartGui.App.Views.KeyStatusPanelView">
+  <Grid RowDefinitions="Auto,*" RowSpacing="8">
+    <StackPanel Spacing="2">
+      <TextBlock Text="关键状态" Classes="section-title" />
+      <TextBlock Text="固定在最右侧，跨页面持续呈现。"
+                 Classes="section-subtitle"
+                 TextWrapping="Wrap" />
+    </StackPanel>
+
+    <ItemsControl Grid.Row="1" ItemsSource="{Binding Cards}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Columns="1" Rows="5" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Border Margin="0,0,0,6"
+                  Classes="status-card tight"
+                  Classes.normal="{Binding IsNormal}"
+                  Classes.warning="{Binding IsWarning}"
+                  Classes.stale="{Binding IsStale}"
+                  Classes.offline="{Binding IsOffline}">
+            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                <TextBlock Text="{Binding Title}"
+                           FontSize="10"
+                           Foreground="{DynamicResource TextMutedBrush}" />
+                <TextBlock Grid.Column="1"
+                           Text="{Binding StateText}"
+                           FontSize="9"
+                           FontWeight="SemiBold" />
+              </Grid>
+              <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="4">
+                <TextBlock Text="{Binding ValueText}"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           TextTrimming="CharacterEllipsis"
+                           MaxLines="1" />
+                <TextBlock Text="{Binding UnitText}"
+                           FontSize="9"
+                           VerticalAlignment="Bottom"
+                           Foreground="{DynamicResource TextMutedBrush}" />
+              </StackPanel>
+              <TextBlock Grid.Row="2"
+                         Text="{Binding DetailText}"
+                         FontSize="9"
+                         Foreground="{DynamicResource TextMutedBrush}"
+                         TextWrapping="Wrap"
+                         MaxLines="2" />
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </Grid>
+</UserControl>
