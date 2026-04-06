@@ -1,25 +1,31 @@
+using DartGui.App.Models;
 using System.Collections.ObjectModel;
 
 namespace DartGui.App.ViewModels;
 
 public sealed class TaskPageViewModel : ViewModelBase
 {
+    private readonly Func<string, CancellationToken, Task<BridgeCommandAck>> sendCommandAsync_;
+    private ConnectionState connectionState_;
+
     private string feedbackTitle_ = "界面预览模式";
-    private string feedbackMessage_ = "当前按钮仅保留布局与本地交互，不连接后台。";
+    private string feedbackMessage_ = "等待连接本地 GuiBridge。";
     private string queueSummary_ = "当前没有排队任务。";
     private bool isFeedbackPositive_;
     private bool isFeedbackNegative_;
 
-    public TaskPageViewModel()
+    public TaskPageViewModel(Func<string, CancellationToken, Task<BridgeCommandAck>> sendCommandAsync)
     {
+        sendCommandAsync_ = sendCommandAsync;
+
         Commands = new ObservableCollection<TaskCommandButtonViewModel>(
         [
-            new("slider_init", "滑块初始化", SelectCommand),
-            new("launch_prepare", "发射准备", SelectCommand),
-            new("launch_cancel", "取消上膛", SelectCommand),
-            new("fire_preload", "预装填发射", SelectCommand),
-            new("cancel", "取消 / 停止", SelectCommand, isDanger: true),
-            new("recover", "恢复", SelectCommand, isRecovery: true),
+            new("slider_init", "滑块初始化", SelectCommandAsync),
+            new("launch_prepare", "发射准备", SelectCommandAsync),
+            new("launch_cancel", "取消上膛", SelectCommandAsync),
+            new("fire_preload", "预装填发射", SelectCommandAsync),
+            new("cancel", "取消 / 停止", SelectCommandAsync, isDanger: true),
+            new("recover", "恢复", SelectCommandAsync, isRecovery: true),
         ]);
 
         QueueItems = new ObservableCollection<TaskQueueItemViewModel>(
@@ -68,28 +74,101 @@ public sealed class TaskPageViewModel : ViewModelBase
         private set => SetProperty(ref queueSummary_, value);
     }
 
-    public void ShowStopPreview()
+    public void ApplyConnectionState(ConnectionState state)
     {
-        ClearSelection();
-        SetFeedback("停止已确认", "当前为本地 UI 壳，未向外部系统发送停止命令。", false, false);
-    }
+        connectionState_ = state;
 
-    private void SelectCommand(TaskCommandButtonViewModel button)
-    {
-        foreach (var candidate in Commands)
-        {
-            candidate.SetSelected(ReferenceEquals(candidate, button));
-        }
-
-        SetFeedback("界面预览模式", $"{button.DisplayName} 仅用于布局与交互预览。", false, false);
-    }
-
-    private void ClearSelection()
-    {
         foreach (var button in Commands)
         {
-            button.SetSelected(false);
+            button.SetEnabled(state == ConnectionState.Online);
         }
+
+        if (state == ConnectionState.Online)
+        {
+            SetFeedback("已连接 GuiBridge", "任务命令将发送到本地桥接服务。", true, false);
+            return;
+        }
+
+        SetFeedback("桥接离线", "当前无法发送任务命令，请检查 RMCS 内的 GuiBridge 组件。", false, true);
+    }
+
+    public void ApplySnapshot(BridgeManagerState manager)
+    {
+        var queuedItems = manager.Queue
+            .Select(item => new TaskQueueItemViewModel(
+                item.DisplayName,
+                "排队中",
+                item.TaskName,
+                IsRunning: false,
+                IsQueued: true,
+                IsIdle: false))
+            .ToList();
+
+        QueueItems.Clear();
+        if (queuedItems.Count == 0)
+        {
+            QueueItems.Add(new TaskQueueItemViewModel(
+                "当前队列为空",
+                "空闲",
+                "没有排队任务。",
+                IsRunning: false,
+                IsQueued: false,
+                IsIdle: true));
+            QueueSummary = "当前没有排队任务。";
+        }
+        else
+        {
+            foreach (var item in queuedItems)
+            {
+                QueueItems.Add(item);
+            }
+
+            QueueSummary = $"当前排队 {queuedItems.Count} 项任务。";
+        }
+
+        foreach (var button in Commands)
+        {
+            button.SetSelected(
+                string.Equals(button.CommandName, manager.CurrentTask, StringComparison.Ordinal),
+                "执行中");
+        }
+    }
+
+    public void ApplyCommandResult(string title, string message, bool positive, bool negative)
+    {
+        SetFeedback(title, message, positive, negative);
+    }
+
+    private async Task SelectCommandAsync(TaskCommandButtonViewModel button)
+    {
+        if (connectionState_ != ConnectionState.Online)
+        {
+            button.SetCommandResult(false);
+            SetFeedback("桥接离线", "当前无法发送任务命令。", false, true);
+            return;
+        }
+
+        foreach (var commandButton in Commands)
+        {
+            commandButton.ResetState();
+        }
+
+        button.SetPending();
+
+        var ack = await sendCommandAsync_(button.CommandName, CancellationToken.None);
+        button.SetCommandResult(ack.Accepted);
+
+        if (ack.Accepted)
+        {
+            SetFeedback("命令已受理", $"{button.DisplayName} 已发送到 RMCS。", true, false);
+            return;
+        }
+
+        SetFeedback(
+            "命令发送失败",
+            $"{button.DisplayName} 未执行: {ManagerDisplayText.ReasonText(ack.Reason)}。",
+            false,
+            true);
     }
 
     private void SetFeedback(string title, string message, bool positive, bool negative)
@@ -99,5 +178,4 @@ public sealed class TaskPageViewModel : ViewModelBase
         IsFeedbackPositive = positive;
         IsFeedbackNegative = negative;
     }
-
 }

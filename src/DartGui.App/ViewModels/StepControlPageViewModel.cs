@@ -49,6 +49,13 @@ public sealed class StepControlPageViewModel : ViewModelBase
 
     private TaskCommandButtonViewModel CreateCommand(string commandName, string displayName)
     {
-        return new TaskCommandButtonViewModel(commandName, displayName, SelectCommand);
+        return new TaskCommandButtonViewModel(
+            commandName,
+            displayName,
+            button =>
+            {
+                SelectCommand(button);
+                return Task.CompletedTask;
+            });
     }
 }

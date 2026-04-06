@@ -8,6 +8,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Deactivated += OnWindowDeactivated;
+        Closed += OnWindowClosed;
     }
 
     private void OnWindowDeactivated(object? sender, EventArgs e)
@@ -15,6 +16,14 @@ public partial class MainWindow : Window
         if (DataContext is ViewModels.MainWindowViewModel viewModel)
         {
             viewModel.HandleWindowDeactivated();
+        }
+    }
+
+    private void OnWindowClosed(object? sender, EventArgs e)
+    {
+        if (DataContext is IDisposable disposable)
+        {
+            disposable.Dispose();
         }
     }
 }
