@@ -4,22 +4,37 @@ namespace DartGui.App.ViewModels;
 
 public sealed class ManualPageViewModel : ViewModelBase
 {
+    private const string DefaultHintText = "按住控制按键高亮，松开恢复。";
+
     private readonly Dictionary<string, ManualButtonViewModel> activeButtonsByGroup_ = new(StringComparer.Ordinal);
 
-    private string hintText_ = "按住方向键高亮，松开恢复。";
+    private string hintText_ = DefaultHintText;
 
     public ManualPageViewModel()
     {
+        SyncBeltGroup = new ManualGroupViewModel("belt", "同步带控制", usesDpad: false, ("up", "上"), ("down", "下"));
+        TriggerPositionGroup = new ManualGroupViewModel("force", "扳机位置控制", usesDpad: false, ("up", "上"), ("down", "下"));
+        LiftGroup = new ManualGroupViewModel("lift", "升降控制", usesDpad: false, ("up", "上"), ("down", "下"));
+        AngleGroup = new ManualGroupViewModel("angle", "角度控制", usesDpad: true, ("up", "上"), ("left", "左"), ("right", "右"), ("down", "下"));
+
         Groups = new ObservableCollection<ManualGroupViewModel>(
         [
-            new ManualGroupViewModel("belt", "皮带控制", usesDpad: false, ("up", "上"), ("down", "下")),
-            new ManualGroupViewModel("angle", "角度控制", usesDpad: true, ("up", "上"), ("left", "左"), ("right", "右"), ("down", "下")),
-            new ManualGroupViewModel("force", "推杆控制", usesDpad: false, ("up", "上"), ("down", "下")),
-            new ManualGroupViewModel("lift", "升降控制", usesDpad: false, ("up", "上"), ("down", "下")),
+            SyncBeltGroup,
+            TriggerPositionGroup,
+            LiftGroup,
+            AngleGroup,
         ]);
     }
 
     public ObservableCollection<ManualGroupViewModel> Groups { get; }
+
+    public ManualGroupViewModel SyncBeltGroup { get; }
+
+    public ManualGroupViewModel TriggerPositionGroup { get; }
+
+    public ManualGroupViewModel LiftGroup { get; }
+
+    public ManualGroupViewModel AngleGroup { get; }
 
     public string HintText
     {
@@ -74,16 +89,16 @@ public sealed class ManualPageViewModel : ViewModelBase
             group.ResetActiveButtons();
         }
 
-        HintText = "按住方向键高亮，松开恢复。";
+        HintText = DefaultHintText;
     }
 
     private static string GetGroupLabel(string groupKey)
     {
         return groupKey switch
         {
-            "belt" => "皮带",
+            "belt" => "同步带",
             "angle" => "角度",
-            "force" => "推杆",
+            "force" => "扳机位置",
             "lift" => "升降",
             _ => groupKey,
         };
@@ -93,7 +108,7 @@ public sealed class ManualPageViewModel : ViewModelBase
     {
         if (activeButtonsByGroup_.Count == 0)
         {
-            HintText = "按住方向键高亮，松开恢复。";
+            HintText = DefaultHintText;
             return;
         }
 

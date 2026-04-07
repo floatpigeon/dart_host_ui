@@ -252,22 +252,27 @@
     <Setter Property="Padding" Value="0" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
 
   <Style Selector="Button.manual-button.tall">
     <Setter Property="MinHeight" Value="42" />
   </Style>
 
+  <Style Selector="Button.manual-button.square">
+    <Setter Property="Width" Value="76" />
+    <Setter Property="Height" Value="76" />
+    <Setter Property="MinHeight" Value="76" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+
   <Style Selector="Button.manual-button:disabled">
     <Setter Property="Background" Value="#E4DDCF" />
     <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
-  </Style>
-
-  <Style Selector="Border.dpad-center">
-    <Setter Property="Background" Value="#E0D6C4" />
-    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CornerRadius" Value="20" />
   </Style>
 
   <Style Selector="Border.feedback-banner">

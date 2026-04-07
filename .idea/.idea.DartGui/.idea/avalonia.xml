@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="src/DartGui.App/App.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Styles/Theme.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/CameraPageView.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/KeyStatusPanelView.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/MainWindow.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/ManualPageView.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/StepControlPageView.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+        <entry key="src/DartGui.App/Views/TaskPageView.axaml" value="src/DartGui.App/DartGui.App.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

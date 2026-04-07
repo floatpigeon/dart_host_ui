@@ -4,9 +4,6 @@
   <Grid RowDefinitions="Auto,*" RowSpacing="8">
     <StackPanel Spacing="2">
       <TextBlock Text="关键状态" Classes="section-title" />
-      <TextBlock Text="固定在最右侧，跨页面持续呈现。"
-                 Classes="section-subtitle"
-                 TextWrapping="Wrap" />
     </StackPanel>
 
     <ItemsControl Grid.Row="1" ItemsSource="{Binding Cards}">
