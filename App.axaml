@@ -1,0 +1,129 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DartHost.App"
+             x:Class="DartHost.App.App"
+             RequestedThemeVariant="Dark">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="AppBackgroundBrush">#0D1418</SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceBrush">#152028</SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceRaisedBrush">#1B2A33</SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceStrongBrush">#243845</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentBrush">#F97316</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentMutedBrush">#8A4B1E</SolidColorBrush>
+        <SolidColorBrush x:Key="SuccessBrush">#2D9F67</SolidColorBrush>
+        <SolidColorBrush x:Key="DangerBrush">#D9485F</SolidColorBrush>
+        <SolidColorBrush x:Key="TextBrush">#F2F5F7</SolidColorBrush>
+        <SolidColorBrush x:Key="TextMutedBrush">#9FB0BA</SolidColorBrush>
+        <SolidColorBrush x:Key="OutlineBrush">#314756</SolidColorBrush>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="Application">
+            <Setter Property="TextElement.Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+        <Style Selector="Window">
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="BorderBrush" Value="{StaticResource OutlineBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+
+        <Style Selector="TextBlock.sectionTitle">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="TextBlock.fieldLabel">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+        </Style>
+
+        <Style Selector="TextBlock.metricValue">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="Background" Value="{StaticResource SurfaceStrongBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#2F4756" />
+        </Style>
+
+        <Style Selector="Button:disabled">
+            <Setter Property="Opacity" Value="0.45" />
+        </Style>
+
+        <Style Selector="Button.action">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="Button.secondary">
+            <Setter Property="Background" Value="#35506A" />
+        </Style>
+
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="Button.compact">
+            <Setter Property="MinHeight" Value="36" />
+            <Setter Property="MinWidth" Value="68" />
+        </Style>
+
+        <Style Selector="Button.gridButton">
+            <Setter Property="MinHeight" Value="64" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+
+        <Style Selector="ToggleButton.nav">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource OutlineBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="MinHeight" Value="48" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="ToggleButton.nav:pointerover">
+            <Setter Property="Background" Value="#1E2D37" />
+        </Style>
+
+        <Style Selector="ToggleButton.nav:checked">
+            <Setter Property="Background" Value="{StaticResource AccentMutedBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+        </Style>
+    </Application.Styles>
+</Application>

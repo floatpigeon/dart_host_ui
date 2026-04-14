@@ -1,0 +1,273 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DartHost.App.ViewModels"
+             xmlns:state="using:DartHost.App.State"
+             xmlns:primitives="clr-namespace:Avalonia.Controls.Primitives;assembly=Avalonia.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1024"
+             d:DesignHeight="600"
+             x:Class="DartHost.App.Views.MainView"
+             x:DataType="vm:MainWindowViewModel">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="12" RowSpacing="8">
+        <Border Classes="card" Grid.Row="0" Padding="12,8">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                <Border Background="{Binding ConnectionBadgeBrush}"
+                        CornerRadius="999"
+                        Padding="10,4"
+                        VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ConnectionStatusText}" FontSize="14" FontWeight="SemiBold"/>
+                </Border>
+
+                <Button Grid.Column="2"
+                        Classes="action secondary compact"
+                        Command="{Binding RecoverCommand}"
+                        Content="恢复"/>
+                <Button Grid.Column="3"
+                        Classes="action danger compact"
+                        Command="{Binding CancelCommand}"
+                        Content="取消"/>
+            </Grid>
+        </Border>
+
+        <Border Classes="card"
+                Grid.Row="1"
+                IsVisible="{Binding HasGlobalError}"
+                Background="#3A1F1F"
+                BorderBrush="#8B2F39"
+                Padding="12,8">
+            <TextBlock Text="{Binding AppShellState.GlobalErrorMessage}" TextWrapping="Wrap"/>
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="100,*,*,100" ColumnSpacing="8">
+            <Border Grid.Column="0" Classes="card" Padding="6">
+                <StackPanel Spacing="6">
+                    <ToggleButton Classes="nav"
+                                  Command="{Binding ShowTaskControlCommand}"
+                                  IsChecked="{Binding IsTaskControlSelected, Mode=OneWay}"
+                                  Content="任务控制"/>
+
+                    <ToggleButton Classes="nav"
+                                  Command="{Binding ShowStepControlCommand}"
+                                  IsChecked="{Binding IsStepControlSelected, Mode=OneWay}"
+                                  Content="单步控制"/>
+
+                    <ToggleButton Classes="nav"
+                                  Command="{Binding ShowManualControlCommand}"
+                                  IsChecked="{Binding IsManualControlSelected, Mode=OneWay}"
+                                  Content="手动控制"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="1">
+                <ScrollViewer IsVisible="{Binding IsTaskControlSelected}" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="8">
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="任务控制"/>
+
+                                <ItemsControl ItemsSource="{Binding TaskCommands}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <primitives:UniformGrid Columns="2"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:CommandItemViewModel">
+                                            <Button Classes="gridButton"
+                                                    Margin="4"
+                                                    IsEnabled="{Binding IsEnabled}"
+                                                    Command="{Binding ExecuteCommand}"
+                                                    Content="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="任务队列"/>
+                                <TextBlock Text="无排队任务"
+                                           FontSize="15"
+                                           IsVisible="{Binding ShowEmptyQueue}"/>
+                                <ItemsControl ItemsSource="{Binding QueueItems}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="state:QueueItemState">
+                                            <Border Background="#1B2A33" CornerRadius="10" Padding="10" Margin="0 0 0 6">
+                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                                    <TextBlock Text="{Binding DisplayName}"
+                                                               FontSize="15"
+                                                               FontWeight="SemiBold"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Status}" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer IsVisible="{Binding IsStepControlSelected}" HorizontalScrollBarVisibility="Disabled">
+                    <Border Classes="card">
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="sectionTitle" Text="单步控制"/>
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                                <Button Grid.Row="0" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="步骤一"/>
+                                <Button Grid.Row="0" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="步骤二"/>
+                                <Button Grid.Row="1" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="步骤三"/>
+                                <Button Grid.Row="1" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="步骤四"/>
+                                <Button Grid.Row="2" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="步骤五"/>
+                                <Button Grid.Row="2" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="步骤六"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </ScrollViewer>
+
+                <ScrollViewer IsVisible="{Binding IsManualControlSelected}" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="8">
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="手动控制"/>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                                    <Button Grid.Row="0" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="抬升"/>
+                                    <Button Grid.Row="0" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="下压"/>
+                                    <Button Grid.Row="1" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="左摆"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="右摆"/>
+                                    <Button Grid.Row="2" Grid.Column="0" Classes="gridButton" IsEnabled="False" Content="加力"/>
+                                    <Button Grid.Row="2" Grid.Column="1" Classes="gridButton" IsEnabled="False" Content="减力"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <ScrollViewer IsVisible="{Binding IsDeviceStatusSelected}" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="8">
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="设备状态"/>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                                    <Border Grid.Row="0" Grid.Column="0" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="生命周期"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding LifecycleText}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="1" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="当前任务"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding CurrentTaskText}" FontSize="20"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="0" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="当前动作"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding CurrentActionText}" FontSize="20"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="1" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="发射次数"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding FireCountText}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="原始量"/>
+                                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                                    <Border Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="仰角"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding PitchValueText}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="力传感一"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding ForceChannel1Text}"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="2" Classes="card" Padding="10">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="fieldLabel" Text="力传感二"/>
+                                            <TextBlock Classes="metricValue" Text="{Binding ForceChannel2Text}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="card">
+                            <StackPanel Spacing="8">
+                                <TextBlock Classes="sectionTitle" Text="最近错误"/>
+                                <TextBlock Text="{Binding LastManagerErrorText}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer IsVisible="{Binding IsVisualFeedbackSelected}" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="8">
+                        <Border Classes="card">
+                            <TextBlock Classes="sectionTitle" Text="视觉回传"/>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Border Grid.Column="0"
+                                    Classes="card"
+                                    Height="240"
+                                    Background="#10181D"
+                                    BorderBrush="#485967">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                                    <TextBlock Text="图像一" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="未实现"
+                                               FontSize="15"
+                                               Foreground="{StaticResource TextMutedBrush}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1"
+                                    Classes="card"
+                                    Height="240"
+                                    Background="#10181D"
+                                    BorderBrush="#485967">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                                    <TextBlock Text="图像二" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="未实现"
+                                               FontSize="15"
+                                               Foreground="{StaticResource TextMutedBrush}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <Border Grid.Column="3" Classes="card" Padding="6">
+                <StackPanel Spacing="6">
+                    <ToggleButton Classes="nav"
+                                  Command="{Binding ShowDeviceStatusCommand}"
+                                  IsChecked="{Binding IsDeviceStatusSelected, Mode=OneWay}"
+                                  Content="设备状态"/>
+
+                    <ToggleButton Classes="nav"
+                                  Command="{Binding ShowVisualFeedbackCommand}"
+                                  IsChecked="{Binding IsVisualFeedbackSelected, Mode=OneWay}"
+                                  Content="视觉回传"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
